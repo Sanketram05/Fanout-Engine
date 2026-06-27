@@ -32,7 +32,7 @@ export function attachWebSocketServer(server){
         wss.clients.forEach((ws) => {
             if(ws.isAlive === false) return ws.terminate();
 
-            we.isAlive = false;
+            ws.isAlive = false;
             ws.ping();
         })
     }, 30000);
