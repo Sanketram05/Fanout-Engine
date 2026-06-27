@@ -126,7 +126,7 @@ export function attachWebSocketServer(server){
         })
 
         socket.on('error', () => {
-            socket.terminate;
+            socket.terminate();
         })
 
         socket.on('close', () => {
