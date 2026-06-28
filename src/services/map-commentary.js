@@ -21,8 +21,18 @@ export function mapCommentary(matchId, fixtureId, event, sequence = 0) {
             event.team?.id ?? "",
             event.player?.id ?? "",
             event.assist?.id ?? "",
-            sequence, // only acts as a last-resort tie-breaker
+            sequence, // last-resort tie-breaker
         ].join("-"),
+
+        // Required database fields
+        matchId,
+        minute: elapsed,
+        sequence,
+        period,
+
+        eventType: event.type ?? null,
+        actor: event.player?.name ?? null,
+        team: event.team?.name ?? null,
 
         message:
             event.comments ??
