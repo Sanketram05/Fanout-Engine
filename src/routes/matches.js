@@ -1,9 +1,9 @@
 import {Router} from 'express';
-import { createMatchSchema, listMatchesQuerySchema } from '../validation/matches.js';
+import { createMatchSchema, listMatchesQuerySchema, updateScoreSchema, matchIdParamSchema } from '../validation/matches.js';
 import {matches} from '../db/schema.js'
 import {db} from "../db/db.js"
 import { getMatchStatus } from '../utils/match-status.js';
-import { desc } from 'drizzle-orm';
+import { desc,eq } from 'drizzle-orm';
 
 export const matchRouter = Router();
 
@@ -62,3 +62,39 @@ matchRouter.post('/', async(req,res) => {
         res.status(500).json({error : 'Failed to create match.'});
     }
 })
+
+matchRouter.get("/:id", async (req, res) => {
+    const params = matchIdParamSchema.safeParse(req.params);
+
+    if (!params.success) {
+        return res.status(400).json({
+            error: "Invalid match id",
+            details: params.error.issues,
+        });
+    }
+
+    try {
+        const result = await db
+            .select()
+            .from(matches)
+            .where(eq(matches.id, params.data.id))
+            .limit(1);
+
+        if (result.length === 0) {
+            return res.status(404).json({
+                error: "Match not found",
+            });
+        }
+
+        return res.status(200).json({
+            data: result[0],
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            error: "Failed to fetch match",
+        });
+    }
+});
