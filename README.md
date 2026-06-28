@@ -104,7 +104,7 @@ sportz/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/<your-username>/sportz.git
+git clone https://github.com/Sanketram05/Fanout-Engine.git
 
 cd sportz
 ```
@@ -271,7 +271,7 @@ Next.js Client
 
 **Sanket Ram**
 
-GitHub: https://github.com/SanketRam05
+GitHub: https://github.com/Sanketram05
 
 ---
 
