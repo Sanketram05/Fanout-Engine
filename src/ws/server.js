@@ -125,15 +125,15 @@ export function attachWebSocketServer(server){
             handleMessage(socket, data);
         })
 
-        socket.on('error', () => {
-            socket.terminate();
-        })
-
+        
         socket.on('close', () => {
             cleanupSubscriptions(socket);
         })
-
-        socket.on('error', console.error);
+        
+        socket.on('error', (err) => {
+            console.log(err);
+            socket.terminate();
+        })
     });
 
     const interval = setInterval(() => {
