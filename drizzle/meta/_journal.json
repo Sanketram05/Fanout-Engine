@@ -8,6 +8,20 @@
       "when": 1782315016031,
       "tag": "0000_clear_lethal_legion",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782652490335,
+      "tag": "0001_whole_the_anarchist",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782653553753,
+      "tag": "0002_tiresome_old_lace",
+      "breakpoints": true
     }
   ]
 }
