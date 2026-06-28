@@ -9,6 +9,8 @@ function getStatus(short) {
         case "HT":
         case "2H":
         case "ET":
+        case "BT":
+        case "P":
             return MATCH_STATUS.LIVE;
 
         case "FT":

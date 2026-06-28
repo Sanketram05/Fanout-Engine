@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, and, notInArray } from "drizzle-orm";
 
 import { db } from "../db/db.js";
 import { matches } from "../db/schema.js";
@@ -89,6 +89,31 @@ export async function syncMatches(broadcastCommentary = null) {
                 );
             }
         }
+
+        const liveFixtureIds = data.response.map(
+            (fixture) => fixture.fixture.id
+        );
+
+        const result = await db
+            .update(matches)
+            .set({
+                status: "finished",
+            })
+            .where(
+                and(
+                    eq(matches.status, "live"),
+                    notInArray(matches.apiMatchId, liveFixtureIds)
+                )
+            )
+            .returning();
+
+        if (result.length > 0) {
+            console.log(
+                `Marked ${result.length} stale live match(es) as finished.`
+            );
+        }
+
+
         console.log(
             `Sync complete: ${inserted} inserted, ${updated} updated`
         );

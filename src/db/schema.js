@@ -16,7 +16,7 @@ export const matchStatusEnum = pgEnum('match_status', [
 
 export const matches = pgTable('matches', {
   id: serial('id').primaryKey(),
-  apiMatchId: integer("api_match_id").unique(),
+  apiMatchId: integer("api_match_id").unique().notNull(),
   sport: text('sport').notNull(),
   homeTeam: text('home_team').notNull(),
   awayTeam: text('away_team').notNull(),
@@ -32,7 +32,7 @@ export const matches = pgTable('matches', {
 
 export const commentary = pgTable('commentary', {
   id: serial('id').primaryKey(),
-  apiEventId: text("api_event_id").unique(),
+  apiEventId: text("api_event_id").unique().notNull(),
   matchId: integer('match_id')
     .notNull()
     .references(() => matches.id, { onDelete: 'cascade' }),

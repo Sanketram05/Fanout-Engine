@@ -1,5 +1,3 @@
-import { eq } from "drizzle-orm";
-
 import { db } from "../db/db.js";
 import { commentary } from "../db/schema.js";
 
@@ -29,20 +27,19 @@ export async function syncCommentary(
                 i
             );
 
-            const existing = await db
-                .select()
-                .from(commentary)
-                .where(eq(commentary.apiEventId, mapped.apiEventId))
-                .limit(1);
+            const inserted = await db
+            .insert(commentary)
+            .values(mapped)
+            .onConflictDoNothing({
+                target: commentary.apiEventId,
+            })
+            .returning();
 
-            if (existing.length > 0) {
+            const created = inserted[0];
+
+            if (!created) {
                 continue;
             }
-
-            const [created] = await db
-                .insert(commentary)
-                .values(mapped)
-                .returning();
 
             if (broadcastCommentary) {
                 broadcastCommentary(dbMatchId, created);

@@ -27,17 +27,29 @@ const {broadcastMatchCreated, broadcastCommentary} = attachWebSocketServer(serve
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
 app.locals.broadcastCommentary = broadcastCommentary;
 
-await syncMatches();
+const SYNC_INTERVAL = 120000; 
 
-setInterval(async () => {
-    await syncMatches();
-}, 30000);
+let isSyncRunning = false;
 
-await syncMatches(broadcastCommentary);
+async function runSync() {
+    if (isSyncRunning) {
+        return;
+    }
 
-setInterval(async () => {
-    await syncMatches(broadcastCommentary);
-}, 120000);
+    isSyncRunning = true;
+
+    try {
+        await syncMatches(broadcastCommentary);
+    } catch (error) {
+        console.error("Sync failed:", error);
+    } finally {
+        isSyncRunning = false;
+    }
+}
+
+await runSync();
+
+setInterval(runSync, SYNC_INTERVAL);
 
 server.listen(PORT,HOST, () => {
 
