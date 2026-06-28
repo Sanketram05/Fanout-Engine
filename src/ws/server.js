@@ -70,6 +70,7 @@ function handleMessage(socket,data){
         subscribe(message.matchId, socket);
         socket.subscriptions.add(message.matchId);
         sendJson(socket,{type : 'subscribed', matchId: message.matchId});
+        console.log("Client subscribed:", message.matchId);
         return;
     }
 
@@ -77,6 +78,7 @@ function handleMessage(socket,data){
         unsubscribe(message.matchId, socket);
         socket.subscriptions.delete(message.matchId);
         sendJson(socket,{type : 'unsubscribed', matchId: message.matchId});
+        console.log("Client unsubscribed:", message.matchId);
         return;
     }
 
@@ -152,6 +154,7 @@ export function attachWebSocketServer(server){
     }
 
     function broadcastCommentary(matchId, comment){
+        console.log("Broadcasting commentary for match", matchId);
         broadcastToMatch(matchId, { type: 'commentary', data: comment});
     }
 
