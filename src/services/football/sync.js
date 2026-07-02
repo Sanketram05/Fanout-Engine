@@ -1,9 +1,9 @@
 import { eq, and, notInArray } from "drizzle-orm";
 
-import { db } from "../db/db.js";
-import { matches } from "../db/schema.js";
+import { db } from "../../db/db.js";
+import { matches } from "../../db/schema.js";
 
-import { getLiveMatches } from "./football-api.js";
+import { getLiveMatches } from "./api.js";
 import { mapFixture } from "./map-fixture.js";
 import { syncCommentary } from "./commentary-sync.js";
 

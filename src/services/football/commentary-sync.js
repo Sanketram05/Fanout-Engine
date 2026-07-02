@@ -1,7 +1,7 @@
-import { db } from "../db/db.js";
-import { commentary } from "../db/schema.js";
+import { db } from "../../db/db.js";
+import { commentary } from "../../db/schema.js";
 
-import { getMatchEvents } from "./football-api.js";
+import { getMatchEvents } from "./api.js";
 import { mapCommentary } from "./map-commentary.js";
 
 export async function syncCommentary(
@@ -28,12 +28,12 @@ export async function syncCommentary(
             );
 
             const inserted = await db
-            .insert(commentary)
-            .values(mapped)
-            .onConflictDoNothing({
-                target: commentary.apiEventId,
-            })
-            .returning();
+                .insert(commentary)
+                .values(mapped)
+                .onConflictDoNothing({
+                    target: commentary.apiEventId,
+                })
+                .returning();
 
             const created = inserted[0];
 
