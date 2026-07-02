@@ -1,4 +1,4 @@
-import { MATCH_STATUS } from "../validation/matches.js";
+import { MATCH_STATUS } from "../../validation/matches.js";
 
 function getStatus(short) {
     switch (short) {
