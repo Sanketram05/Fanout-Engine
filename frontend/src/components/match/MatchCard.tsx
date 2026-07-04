@@ -101,7 +101,7 @@ export default function MatchCard({
                     className="w-full"
                 >
 
-                    <Link href={`/matches/${match.id}`}>
+                    <Link href={`football/matches/${match.id}`}>
 
                         View Match →
 

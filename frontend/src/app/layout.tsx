@@ -1,3 +1,4 @@
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 import QueryProvider from "@/providers/query-provider";
@@ -15,7 +16,7 @@ export default function RootLayout({
                 <AppThemeProvider>
 
                     <QueryProvider>
-
+                        <Navbar/>
                         {children}
 
                     </QueryProvider>

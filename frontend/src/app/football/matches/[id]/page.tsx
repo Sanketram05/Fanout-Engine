@@ -90,7 +90,7 @@ export default function MatchPage() {
                 asChild
                 variant="outline"
             >
-                <Link href="/">
+                <Link href="/football">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back
                 </Link>
